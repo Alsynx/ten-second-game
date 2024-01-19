@@ -2,21 +2,33 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro; //MUST include this if any TMP elements are to be included in the code, which happens to be the input field in this case
 
 public class StartTimer : MonoBehaviour
 {
 
-    public float timeLeft = 3.0f;
-    public Text startText; // used for showing countdown from 3, 2, 1 
+    public float timeLeft = 2.0f;
 
+    public GameObject startScreen;
+    public GameObject countdownScreen;
+    public GameObject mashSpaceSprite;
+    public TMP_InputField passwordBar;
+    public AudioSource startSFX;
 
     void Update()
     {
         timeLeft -= Time.deltaTime;
-        startText.text = (timeLeft).ToString("0");
         if (timeLeft < 0)
         {
-            //Do something useful or Load a new game scene depending on your use-case
+            startScreen.SetActive(false); //for w/e reason this causes error messages in the unity console but doesn't do anything. disabling it in a way breaks it, but that's what i want so...?
+            countdownScreen.SetActive(true);
+            startSFX.Stop();
+        }
+
+        if (startScreen.activeInHierarchy == false)
+        {
+            passwordBar.Select();
+            mashSpaceSprite.SetActive(true);
         }
     }
 } 

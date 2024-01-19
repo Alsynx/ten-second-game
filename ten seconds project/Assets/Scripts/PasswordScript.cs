@@ -8,16 +8,19 @@ public class PasswordScript : MonoBehaviour
 {
     private string input;
     public GameObject winScreen;
+    public GameObject loseScreen;
     public ParticleSystem confetti;
 
     AudioSource audioSource;
 
     public AudioClip winSound;
+    public AudioClip loseSound;
+    public AudioClip inputSFX;
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>(); //somehow i always forget, but in order for this to work you need to attach an audio source component to the main camera
     }
 
     // Update is called once per frame
@@ -34,13 +37,16 @@ public class PasswordScript : MonoBehaviour
         input = Password;
         Debug.Log(input);
 
-        if (input == "                                                  ") //the password is just a bunch of spaces, this was always the plan but idk how to script counting characters
+        if (input == "                                                                                ") //the password is just a bunch of spaces, this was always the plan but idk how to script counting characters
         {
             Debug.Log ("You Win!");
             winScreen.SetActive(true);
             Instantiate(confetti);
             PlaySound(winSound);
+            //GameTimer.SetActive(false);
         }
+
+        PlaySound(inputSFX);
     }
 
     public void restartScene()
